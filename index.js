@@ -20,7 +20,7 @@ const api = require("./routes/api");
 const auth = require("./middleware/auth.js");
 const config = require("./config");
 const logger = require("./utils/logger.js").init();
-const {port} = config;
+const port = process.env.PORT || 8000;
 
 const app = express();
 
