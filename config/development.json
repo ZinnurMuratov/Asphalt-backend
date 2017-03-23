@@ -1,0 +1,8 @@
+{
+    "host": "localhost",
+    "port": 8080,
+    "logFile": "logs",
+    "database": "mongodb://admin:1k1b1n0n1k1@ds139370.mlab.com:39370/asphalt",
+    "sessionSecret": "top_secret_word_ever_been_th@t_n0_1_w1ll_h@ck_1t",
+    "jwtSession": false
+}
