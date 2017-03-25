@@ -2,6 +2,7 @@
 const {SESSION_LIFE_TIME} = require("../utils/constants");
 const mongoose = require("mongoose");
 const randomString = require("randomstring");
+const logger = require("../utils/logger").logger;
 const Schema = mongoose.Schema;
 
 const SessionSchema = new Schema({
@@ -37,10 +38,8 @@ UserSchema.methods.addSession = function() {
 
 UserSchema.methods.getSession = function(sessionId) {
 	let user = this;
-	if (typeof sessionId !== "string") {
-		sessionId = sessionId.toString();
-	}
-	return user.sessions.find((s) => s._id === sessionId);
+	let session = user.sessions.find((s) => s._id === sessionId);
+	return session;
 };
 
 UserSchema.methods.updateSessionByRefreshToken = function(refreshToken) {
@@ -55,7 +54,9 @@ UserSchema.methods.updateSessionByRefreshToken = function(refreshToken) {
 			session.accessToken = randomString.generate();
 			session.validThrough = new Date(Date.now() + SESSION_LIFE_TIME);
 			user.save()
-				.then((u) => resolve(u.getSession(session._id)))
+				.then((u) => {
+					resolve(u.getSession(session._id));
+				})
 				.catch(reject);
 		}
 	});

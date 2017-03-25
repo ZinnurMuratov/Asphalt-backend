@@ -130,9 +130,8 @@ function updateSessionByRefreshToken(refreshToken) {
 					resolve(null);
 				} else {
 					user.updateSessionByRefreshToken(refreshToken)
-						.then((session) => {
-							resolve(session);
-						}).catch(reject);					
+						.then((session) => resolve(session))
+						.catch(reject);					
 				}
 			}).catch(reject);
 	});
