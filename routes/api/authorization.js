@@ -13,10 +13,10 @@ function getResultFromSession(session) {
 	};
 }
 
-router.post("/sign_up", (req, res, next) => {
+router.post("/sign_up", (req, res) => {
 	let email = req.body.email || null;
-    let password = req.body.password || null;
-    let name = req.body.name || null;
+	let password = req.body.password || null;
+	let name = req.body.name || null;
 	
 	authValidation.signUpFieldsIsValid(email,name,password)
 		.then((validData) => {
@@ -34,7 +34,7 @@ router.post("/sign_up", (req, res, next) => {
 	
 });
 
-router.post("/sign_in", (req, res, next) => {
+router.post("/sign_in", (req, res) => {
 	let email = req.body.email || null;
 	let password = req.body.password || null;
 	authValidation.signInFieldsIsValid(email, password)
@@ -65,7 +65,6 @@ router.post("/getNewToken", (req, res) => {
 					res.json({ status: "error_session_not_found", error: "Can not found session with such refreshToken"});
 				}
 			}).catch((err) => {
-				logger.error("error in /getNewToken: ${err}");
 				res.json({ status: "error_internal", error: "Internal server error" });
 			});
 	} else {

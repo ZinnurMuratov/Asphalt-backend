@@ -17,15 +17,14 @@ function createUser(email, name, password){
 								.catch(reject);
 						})
 						.catch((err) => {
-							logger.error(`error on creating user ${err}`);
 							reject();
 					});
 				} else {
-					reject('email is already busy');
+					reject("email is already busy");
 				}
 			}).catch((err) => {
-				logger.error(`error on creating user ${email}: ${err}`);
-				reject('error');
+				logger.error("error on creating user ${email}: ${err}");
+				reject("error");
 			});
 			
 	});
@@ -50,35 +49,6 @@ function login(email, password){
 	});
 }
 
-function createSession(email, name, password) {
-	
-	return new Promise((resolve, reject) => {
-
-		User.findOne({email})
-			.then((user) => {
-				if (!user) {
-					User.create({email, name, password})
-						.then((newUser) => {
-							newUser.addSession()
-								.then(resolve)
-								.catch(reject);
-						})
-						.catch((err) => {
-							logger.error(`error on creating user ${err}`);
-							reject();
-						});
-				} else {
-					user.addSession()
-						.then(resolve)
-						.catch(reject);
-				}
-			}).catch((err) => {
-				logger.error(`error on creating session ${email}: ${err}`);
-				reject();
-			});
-	});
-	
-}
 
 function getSession(email, sessionId) {
 	return new Promise((resolve, reject) => {
@@ -163,8 +133,7 @@ function updateProfile(user, userUpdate) {
 
 module.exports = {
 	createUser,
-	login, 
-	createSession,
+	login,
 	getSession,
 	findSession, 
 	findByAccessToken,
