@@ -43,7 +43,7 @@ router.post("/sign_in", (req, res, next) => {
 				.then(({session}) => {
 					res.status(200).json({ status:"ok", result: getResultFromSession(session)});
 				}).catch((err) => {
-					logger.error(`error on /authorize: ${err}.`);
+					logger.error("error on /authorize: ${err}.");
 					res.status(500).json({ status: "error", error: err});
 				});
 		})
@@ -65,7 +65,7 @@ router.post("/getNewToken", (req, res) => {
 					res.json({ status: "error_session_not_found", error: "Can not found session with such refreshToken"});
 				}
 			}).catch((err) => {
-				logger.error(`error in /getNewToken: ${err}`);
+				logger.error("error in /getNewToken: ${err}");
 				res.json({ status: "error_internal", error: "Internal server error" });
 			});
 	} else {

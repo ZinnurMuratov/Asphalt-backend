@@ -1,8 +1,5 @@
 "use strict";
 
-const User = require("../models/user");
-const logger = require("../utils/logger").logger;
-
 function getResultFromUser(user) {
 	return {
 		email: user.email,

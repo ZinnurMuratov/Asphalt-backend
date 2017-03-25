@@ -1,19 +1,40 @@
 "use strict";
 
-const Hole = require("../models/hole");
+const holeValidation = require("../validations/hole");
 const logger = require("../utils/logger").logger;
 const holes = require("../repositories/holes");
-const geocoder = require('geocoder');
+
 
 
 function getHoles(req, res){
+    let city = req.body.city || "Kazan'";
+    let perPage = req.body.perpage || 10;
+    let page = req.body.page || 0;
+
+    holes.getHoles(city, perPage, page)
+        .then((holes) => {
+            res.status(200).json({status: "ok", data: holes});
+        })
+        .catch((err) => {
+            res.status(500).json({ status: "error", error: err });
+        });
     
 }
 
 function createHole(req, res){
-    geocoder.reverseGeocode( 55.797499,49.124649, function ( err, data ) {
-        res.status(200).json(data.results[0].address_components[2].long_name);
-    });
+    let latitude = req.body.lat || null;
+    let longitude = req.body.lng || null;
+
+    holeValidation.geoValidation(latitude, longitude)
+        .then(({lat,lng}) =>  {
+            holes.createHole(lat, lng)
+                .then((status) => { res.status(200).json({status:status});})
+                .catch((err) => { res.status(500).json({ status: "error", error: err});}); 
+        })
+        .catch((err) => {
+			res.status(500).json({ status: "error_invalid_input", error: err });
+		});
+    
 }
 
 

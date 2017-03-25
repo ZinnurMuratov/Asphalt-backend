@@ -27,8 +27,8 @@ const app = express();
 mongoose.Promise = global.Promise;
 
 mongoose.connect(config.database)
-    .then(() => logger.info(`connected to database ${config.database}.`))
-    .catch((err) => logger.error(`connection to database ${config.database} failed: ${err}`));
+    .then(() => logger.info("connected to database ${config.database}."))
+    .catch((err) => logger.error("connection to database ${config.database} failed: ${err}"));
 
 
 app.use(compress())
@@ -52,7 +52,7 @@ app.use(function(req, res) {
 const server = app.listen(port);
 
 server.on("listening", () => {
-	logger.info(`Application running on ${config.host}:${port}`);
+	logger.info("Application running on ${config.host}:${port}");
 });
 
 module.exports = app;
