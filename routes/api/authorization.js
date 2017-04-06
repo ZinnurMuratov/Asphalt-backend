@@ -60,7 +60,8 @@ router.post("/getNewToken", (req, res) => {
 		users.updateSessionByRefreshToken(refreshToken)
 			.then((session) => {
 				if (session) {
-					res.json({ status: "ok", result: getResultFromSession(session) });
+					// res.json({ status: "ok", result: getResultFromSession(session) });
+					res.writeHead(200, {'newToken': session.accessToken});
 				} else {
 					res.json({ status: "error_session_not_found", error: "Can not found session with such refreshToken"});
 				}
