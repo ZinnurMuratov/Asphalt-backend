@@ -22,7 +22,7 @@ function authenticate (req, res, next) {
 		users.findByAccessToken(token)
 			.then((user) => {
 				if (!user) {
-					return res.json({ status: "error", error: "Authentication failed. Session not found." });
+					return res.status(401).json({ status: "error", error: "Authentication failed. Session not found." });
 				} else {
 					let session = user.sessions.find((s) => s.accessToken === token);
 					if (session.validThrough <= Date.now()) {
@@ -35,7 +35,7 @@ function authenticate (req, res, next) {
 				
 			}).catch((err) => {
 				logger.error(`error on authenticate: ${err}`);
-				return res.json({ status: "error", error: "Authentication failed. "});
+				return res.status(401).json({ status: "error", error: "Authentication failed. "});
 			});	
 
 	}
